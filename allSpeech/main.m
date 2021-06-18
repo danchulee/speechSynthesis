@@ -5,17 +5,17 @@ clear all; close all; clc;
 % (3) cntFrame     (7) corrFrame  (11) signal
 % (4) frames       (8) vuv        (12) speech
 
-%¿©ÀÚ ¹«¼ºÀ½ frame ÇÏ³ª zcr
-%³²ÀÚ ¹«¼ºÀ½ frame ÇÏ³ª zcr
+%ì—¬ì ë¬´ì„±ìŒ frame í•˜ë‚˜ zcr
+%ë‚¨ì ë¬´ì„±ìŒ frame í•˜ë‚˜ zcr
 
 file = struct;
 
-file(1).filename='³²ÀÚ¹«¼ºÀ½';   file(2).filename='¿©ÀÚ¹«¼ºÀ½';  
-file(3).filename='¿¬¾Æ´Â';   file(4).filename='¸ÕÀú';   file(5).filename='³ª°¬³Ä';    file(6).filename='¿¬¾Æ´Â2';
-file(7).filename='¸ÕÀú2'; file(11).filename='ÀÌÁ¦'; file(12).filename='½ÃÀÛÀÌ³×';
+file(1).filename='ë‚¨ìë¬´ì„±ìŒ';   file(2).filename='ì—¬ìë¬´ì„±ìŒ';  
+file(3).filename='ì—°ì•„ëŠ”';   file(4).filename='ë¨¼ì €';   file(5).filename='ë‚˜ê°”ëƒ';    file(6).filename='ì—°ì•„ëŠ”2';
+file(7).filename='ë¨¼ì €2'; file(11).filename='ì´ì œ'; file(12).filename='ì‹œì‘ì´ë„¤';
 
 
-file(8).filename='³²¿¬¾Æ´Â'; file(9).filename='³²¸ÕÀú'; file(10).filename='³²³ª°¬³Ä';
+file(8).filename='ë‚¨ì—°ì•„ëŠ”'; file(9).filename='ë‚¨ë¨¼ì €'; file(10).filename='ë‚¨ë‚˜ê°”ëƒ';
 
 
 
@@ -36,61 +36,61 @@ file(10).vuvtemp=[0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 
 for i=1:12
     if i==1
-        [x,Fs]=audioread('input/³²ÀÚ¹«.wav');
+        [x,Fs]=audioread('input/ë‚¨ìë¬´.wav');
     elseif i==2
-        [x,Fs]=audioread('input/¿©ÀÚ¹«.wav');
+        [x,Fs]=audioread('input/ì—¬ìë¬´.wav');
     elseif i==3
-        [x,Fs]=audioread('input/¿¬¾Æ´Â.wav');
+        [x,Fs]=audioread('input/ì—°ì•„ëŠ”.wav');
     elseif i==4
-        [x,Fs]=audioread('input/¸ÕÀú.wav');
+        [x,Fs]=audioread('input/ë¨¼ì €.wav');
     elseif i==5
-        [x,Fs]=audioread('input/³ª°¬³Ä.wav');
+        [x,Fs]=audioread('input/ë‚˜ê°”ëƒ.wav');
     elseif i==6
-        [x,Fs]=audioread('input/¿¬¾Æ´Â2.wav');
+        [x,Fs]=audioread('input/ì—°ì•„ëŠ”2.wav');
     elseif i==7
-        [x,Fs]=audioread('input/¸ÕÀú2.wav');
+        [x,Fs]=audioread('input/ë¨¼ì €2.wav');
     elseif i==8
-        [x,Fs]=audioread('input/³²¿¬¾Æ´Â.wav');
+        [x,Fs]=audioread('input/ë‚¨ì—°ì•„ëŠ”.wav');
     elseif i==9
-        [x,Fs]=audioread('input/³²¸ÕÀú.wav');
+        [x,Fs]=audioread('input/ë‚¨ë¨¼ì €.wav');
     elseif i==10
-        [x,Fs]=audioread('input/³²³ª°¬³Ä.wav');
+        [x,Fs]=audioread('input/ë‚¨ë‚˜ê°”ëƒ.wav');
     elseif i==11
-        [x,Fs]=audioread('input/ÀÌÁ¦.wav');
+        [x,Fs]=audioread('input/ì´ì œ.wav');
     elseif i==12
-        [x,Fs]=audioread('input/½ÃÀÛÀÌ³×.wav');
+        [x,Fs]=audioread('input/ì‹œì‘ì´ë„¤.wav');
     end
     
     file(i).origin=x;
     
     Fs=16000;
     len_x=length(x);
-    fprintf("»ùÇÃ ¼ö : %d\n", len_x);
+    fprintf("ìƒ˜í”Œ ìˆ˜ : %d\n", len_x);
 
     y=normalization(x);
     file(i).length=length(y);
-    Ts=1/Fs; %»ùÇÃÁÖ±â
+    Ts=1/Fs; %ìƒ˜í”Œì£¼ê¸°
 
     frame_size=0.032;
     frame_len=frame_size*Fs;
     h_frame_len=frame_len*0.5;
    
-    file(i).cntFrame=floor(file(i).length/(0.5*frame_len))-1; %512samples ¾¿ ÇÁ·¹ÀÓ °³¼ö
+    file(i).cntFrame=floor(file(i).length/(0.5*frame_len))-1; %512samples ì”© í”„ë ˆì„ ê°œìˆ˜
     
     file(i).frame=zeros(file(i).cntFrame,frame_len);
-    for j=1:file(i).cntFrame %ÇÁ·¹ÀÓ ÂÉ°³±â
+    for j=1:file(i).cntFrame %í”„ë ˆì„ ìª¼ê°œê¸°
         file(i).frame(j,:)=y(h_frame_len*(j-1)+1:h_frame_len*(j-1)+frame_len);
     end
     
     window=hamming(frame_len,'periodic');
-    for j=1:file(i).cntFrame %°¢°¢ÀÇ ÇÁ·¹ÀÓ windowing
+    for j=1:file(i).cntFrame %ê°ê°ì˜ í”„ë ˆì„ windowing
         file(i).frame(j,:)=file(i).frame(j,:).*window';
     end
 
-    %zcr ±¸ÇÏ±â
+    %zcr êµ¬í•˜ê¸°
     [file(i).zcr,file(i).zcrmax,file(i).zcrmean]=zcrGen(file(i).cntFrame,frame_len,file(i).frame);
     
-    %power ±¸ÇÏ±â
+    %power êµ¬í•˜ê¸°
     file(i).power=energyGen(file(i).cntFrame,frame_len,file(i).frame);
     
     boyzcr=mean(file(1).zcr);
@@ -114,58 +114,58 @@ for i=1:12
 %     end
    
 
-    %lpc ±¸ÇÏ±â
+    %lpc êµ¬í•˜ê¸°
     file(i).a=zeros(file(i).cntFrame,lpc_order);
     for j=1:file(i).cntFrame
        file(i).a(j,:)=lpc(file(i).frame(j,:),lpc_order-1); 
     end
 
-    %frame¿¡ °öÇÒ signal generator
+    %frameì— ê³±í•  signal generator
     file(i).signal=sigGen(file(i).cntFrame,frame_len,file(i).pitch,file(i).vuv);
     if i>=3&&i<=12
         file(i).signal2=sigGen(file(i).cntFrame,frame_len,file(i).pitch,file(i).vuvtemp);
     end
     
-    %À½¼ºÇÕ¼º
+    %ìŒì„±í•©ì„±
     file(i).speech=speechGen(file(i).cntFrame,frame_len,file(i).length,file(i).a,file(i).signal,file(i).power);
     if i>=3&&i<=12
         file(i).speech2=speechGen(file(i).cntFrame,frame_len,file(i).length,file(i).a,file(i).signal2,file(i).power);
     end
     
     if i==11
-        audiowrite(['output/ÀÌÁ¦set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
-        %audiowrite(['output/ÀÌÁ¦n' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        audiowrite(['output/ì´ì œset' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        %audiowrite(['output/ì´ì œn' num2str(lpc_order) '.wav'], file(i).speech, Fs );
     elseif i==12
-        audiowrite(['output/½ÃÀÛÀÌ³×set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
-        %audiowrite(['output/½ÃÀÛÀÌ³×n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
+        audiowrite(['output/ì‹œì‘ì´ë„¤set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        %audiowrite(['output/ì‹œì‘ì´ë„¤n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
     elseif i==3
-        audiowrite(['output/¿¬¾Æ´Âset' num2str(lpc_order) '.wav'], file(i).speech, Fs );
-        %audiowrite(['output/¿¬¾Æ´Ân' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
+        audiowrite(['output/ì—°ì•„ëŠ”set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        %audiowrite(['output/ì—°ì•„ëŠ”n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
     elseif i==4
-        audiowrite(['output/¸ÕÀúset' num2str(lpc_order) '.wav'], file(i).speech, Fs );
-        %audiowrite(['output/¸ÕÀún' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
+        audiowrite(['output/ë¨¼ì €set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        %audiowrite(['output/ë¨¼ì €n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
     elseif i==5
-        audiowrite(['output/³ª°¬³Äset' num2str(lpc_order) '.wav'], file(i).speech, Fs );   
-        %audiowrite(['output/³ª°¬³Än' num2str(lpc_order) '.wav'], file(i).speech2, Fs );   
+        audiowrite(['output/ë‚˜ê°”ëƒset' num2str(lpc_order) '.wav'], file(i).speech, Fs );   
+        %audiowrite(['output/ë‚˜ê°”ëƒn' num2str(lpc_order) '.wav'], file(i).speech2, Fs );   
     elseif i==6
-        audiowrite(['output/¿¬¾Æ´Â2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
-        %audiowrite(['output/¿¬¾Æ´Â2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
+        audiowrite(['output/ì—°ì•„ëŠ”2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        %audiowrite(['output/ì—°ì•„ëŠ”2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
     elseif i==7
-        audiowrite(['output/¸ÕÀú2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
-        %audiowrite(['output/¸ÕÀú2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
+        audiowrite(['output/ë¨¼ì €2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );
+        %audiowrite(['output/ë¨¼ì €2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );
     elseif i==8
-        audiowrite(['output/³²¿¬¾Æ´Â2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );   
-        %audiowrite(['output/³²¿¬¾Æ´Â2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );   
+        audiowrite(['output/ë‚¨ì—°ì•„ëŠ”2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );   
+        %audiowrite(['output/ë‚¨ì—°ì•„ëŠ”2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );   
     elseif i==9
-        audiowrite(['output/³²¸ÕÀú2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );  
-        %audiowrite(['output/³²¸ÕÀú2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );  
+        audiowrite(['output/ë‚¨ë¨¼ì €2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );  
+        %audiowrite(['output/ë‚¨ë¨¼ì €2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );  
     elseif i==10
-        audiowrite(['output/³²³ª°¬³Ä2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );  
-        %audiowrite(['output/³²³ª°¬³Ä2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );  
+        audiowrite(['output/ë‚¨ë‚˜ê°”ëƒ2set' num2str(lpc_order) '.wav'], file(i).speech, Fs );  
+        %audiowrite(['output/ë‚¨ë‚˜ê°”ëƒ2n' num2str(lpc_order) '.wav'], file(i).speech2, Fs );  
     end
   
 end
-%¹«¼ºÀ½ zcr
+%ë¬´ì„±ìŒ zcr
 
 
 
@@ -184,7 +184,7 @@ tmp_noise=wgn(1,16000,0);
 c_frame=floor(16000/512);
 
 tmp_frame=zeros(c_frame,frame_len);
-for j=1:c_frame %ÇÁ·¹ÀÓ ÂÉ°³±â
+for j=1:c_frame %í”„ë ˆì„ ìª¼ê°œê¸°
     tmp_frame(j,:)=tmp_noise(frame_len*(j-1)+1:frame_len*(j-1)+frame_len);
 end
 
@@ -213,7 +213,7 @@ end
 %%
 
 
-%ºñ½ÁÇÑ ÆÄÀÏ Ã£±â
+%ë¹„ìŠ·í•œ íŒŒì¼ ì°¾ê¸°
 for i=3:12
    exInput=file(4).vuv;
    lInput=length(exInput);
@@ -234,17 +234,17 @@ for i=3:12
 end
 
 for i=3:12
-   fprintf("À¯»ç¼º : ")
+   fprintf("ìœ ì‚¬ì„± : ")
    disp(file(i).coeff(1,2)*100)
    fprintf("% \n")
    disp(i)
    if file(i).coeff(1,2)==1
-       fprintf("¹øÂ°´Â °°Àº ÆÄÀÏ\n");
+       fprintf("ë²ˆì§¸ëŠ” ê°™ì€ íŒŒì¼\n");
        sound(file(i).speech,Fs);
    elseif file(i).coeff(1,2)>0.65
-       fprintf("¹øÂ°´Â À¯»ç ÆÄÀÏ\n");
+       fprintf("ë²ˆì§¸ëŠ” ìœ ì‚¬ íŒŒì¼\n");
        sound(file(i).speech,Fs);
    else
-       fprintf("¹øÂ°´Â ´Ù¸¥ ÆÄÀÏ\n");
+       fprintf("ë²ˆì§¸ëŠ” ë‹¤ë¥¸ íŒŒì¼\n");
    end
 end
