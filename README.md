@@ -38,9 +38,13 @@ _Note: 클릭시 해당 부분으로 이동_
 - 음성을 데이터로 분석한 뒤에 특성을 살려 재합성하는 과정을 나타낸다.
 - 입력 받은 음성 데이터 x samples를 512 samples를 가지는 각각의 frame으로 나눠 저장한 뒤에 진행한다.
 
+![diagram](https://user-images.githubusercontent.com/55473315/122517842-76d92900-d04b-11eb-9f50-9caee6034da2.png)
+
 
 
 ### Normalization
+
+![norm](https://user-images.githubusercontent.com/55473315/122517848-780a5600-d04b-11eb-8ac7-55f938b2803d.png)
 
 - 분산과 평균을 이용한 간단한 정규화인 Mean Normalization을 거친다.
 
@@ -87,6 +91,10 @@ end
 
 ### Short Time Zero Crossing Rate
 
+![sgn](https://user-images.githubusercontent.com/55473315/122517856-79d41980-d04b-11eb-9287-3dc31a003331.png)
+
+![STZCRpng](https://user-images.githubusercontent.com/55473315/122517860-7a6cb000-d04b-11eb-819e-c2fb6cd5fc1f.png)
+
 - 유성음(Voiced)와 무성음(Unvoiced)의 구분에 사용된다.
 - 유성음의 ZCR << 무성음의 ZCR임에 기반하여, Threshold를 기준으로 구별하는 데에 사용한다.
 
@@ -122,6 +130,8 @@ end
 
 
 ### Short Time Energy
+
+![STE](https://user-images.githubusercontent.com/55473315/122517858-79d41980-d04b-11eb-9b19-d2479a41c352.png)
 
 - 유성음(Voiced)와 무성음(Unvoiced)의 구분에 사용된다.
 - 유성음의 에너지 >> 무성음의 에너지임에 기반하여, Threshold를 기준으로 구별하는 데에 사용한다.
@@ -329,21 +339,40 @@ audiowrite(['output' num2str(lpc_order) '.wav'], speechData, Fs);
 
 **Normalization** 
 
+![normalization](https://user-images.githubusercontent.com/55473315/122517850-78a2ec80-d04b-11eb-8c70-510a83d3a59f.png)
+
 **On Hamming Window**
+
+![hammingwindow](https://user-images.githubusercontent.com/55473315/122517846-7771bf80-d04b-11eb-994b-8283579cab35.png)
 
 **ZCR Result**
 
+![zcrpng](https://user-images.githubusercontent.com/55473315/122517868-7c367380-d04b-11eb-8484-2e8ca65613bf.png)
+
 **Power Result**
+
+![power](https://user-images.githubusercontent.com/55473315/122517853-793b8300-d04b-11eb-8055-8f4678ff696b.png)
 
 **AutoCorrelation function**
 
+![acf](https://user-images.githubusercontent.com/55473315/122517837-750f6580-d04b-11eb-9db6-30169feaf92d.png)
+
 **Voiced/Unvoiced**
+
+![vuv](https://user-images.githubusercontent.com/55473315/122517862-7b054680-d04b-11eb-944b-24ccdc1e4afb.png)
 
 **Synthesized Result**
 
+![synthesized](https://user-images.githubusercontent.com/55473315/122517861-7a6cb000-d04b-11eb-96da-852d6c74d33b.png)
+
 **Overlapped Synthesized on Original wav file**
 
+![overlapped](https://user-images.githubusercontent.com/55473315/122517851-793b8300-d04b-11eb-82e3-12e27554152f.png)
+
 **Calculated VUV vs Hard coded VUV**
+
+![vuvvs1](https://user-images.githubusercontent.com/55473315/122517864-7b054680-d04b-11eb-845b-5d52db5e00f8.png)
+![vuvvs2](https://user-images.githubusercontent.com/55473315/122517866-7b9ddd00-d04b-11eb-857b-f154c1328ece.png)
 
 
 
