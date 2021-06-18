@@ -15,7 +15,7 @@
 _Note: 클릭시 해당 부분으로 이동_
 
 - [Sections](#sections)
-  - [Speech Synthesis][#speech-synthesis]
+  - [Speech Synthesis](#speech-synthesis)
   - [Normalization](#normalization)
   - [Framing And Windowing](#framing-and-windowing)
   - [Short Time Zero Crossing Rate](#short-time-zero-crossing-rate)
